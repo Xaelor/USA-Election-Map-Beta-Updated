@@ -386,7 +386,7 @@ class MapSource
     if (this.customOpenRegionLinkFunction == undefined)
     {
       if (!this.homepageURL) { return false }
-      linkToOpen = this.homepageURL + this.regionIDToLinkMap[regionID]
+      linkToOpen = this.homepageURL + (this.regionIDToLinkMap?.[regionID] ?? "")
     }
     else
     {
@@ -536,7 +536,8 @@ class MapSource
   
   getCustomDefaultMargins()
   {
-    return this.customDefaultMargins
+    const isFunction = (typeof this.customDefaultMargins === 'function')
+    return isFunction ? this.customDefaultMargins() : this.customDefaultMargins
   }
   
   getVotesharePrefix()
